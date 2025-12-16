@@ -1,42 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Status de Separação</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: auto;
-    }
-    label {
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 6px;
-      margin-bottom: 10px;
-    }
-    button {
-      padding: 10px;
-      width: 100%;
-      background: #25D366;
-      color: white;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Passagem de Turno</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+  background:#f5f5f5;
+}
+h2{
+  text-align:center;
+}
+label{
+  font-weight:bold;
+}
+input, select{
+  width:100%;
+  padding:8px;
+  margin-bottom:10px;
+  font-size:16px;
+}
+button{
+  width:100%;
+  padding:12px;
+  background:#25D366;
+  color:white;
+  border:none;
+  font-size:18px;
+  border-radius:5px;
+  cursor:pointer;
+}
+button:hover{
+  opacity:0.9;
+}
+.box{
+  background:white;
+  padding:15px;
+  border-radius:8px;
+}
+</style>
 </head>
+
 <body>
 
-<h2>Status Separação</h2>
+<div class="box">
+<h2>Passagem de Turno</h2>
 
 <label>Data</label>
 <input type="date" id="data">
 
 <label>Status Separação</label>
-<input type="text" id="status">
+<select id="status">
+  <option value="Separação">Separação</option>
+  <option value="Expedição">Expedição</option>
+</select>
 
 <label>Horário HE</label>
 <input type="time" id="he">
@@ -67,10 +90,13 @@
 <label>Vira Não Programado - Tons</label>
 <input type="number" id="vnp_tons">
 
-<button onclick="enviarWhats()">Enviar WhatsApp</button>
+<br>
+
+<button onclick="enviarWhats()">📲 Enviar para WhatsApp</button>
+</div>
 
 <script>
-function enviarWhats() {
+function enviarWhats(){
 
   var data = document.getElementById("data").value;
   var status = document.getElementById("status").value;
@@ -88,27 +114,26 @@ function enviarWhats() {
   var vnpTons = document.getElementById("vnp_tons").value;
 
   var mensagem =
-    "*STATUS SEPARAÇÃO*%0A" +
-    "Data: " + data + "%0A" +
-    "Status: " + status + "%0A%0A" +
+    "*📋 PASSAGEM DE TURNO*%0A" +
+    "📅 Data: " + data + "%0A" +
+    "📌 Status: " + status + "%0A%0A" +
 
-    "Horários:%0A" +
+    "⏰ Horários:%0A" +
     "HE: " + he + "%0A" +
     "HO: " + ho + "%0A" +
     "Recebimento: " + receb + "%0A%0A" +
 
-    "Expedido:%0A" +
+    "🚚 Expedido:%0A" +
     "Carros: " + expCarros + " | Tons: " + expTons + "%0A%0A" +
 
-    "Vira Programado:%0A" +
+    "🔁 Vira Programado:%0A" +
     "Carros: " + vpCarros + " | Tons: " + vpTons + "%0A%0A" +
 
-    "Vira Não Programado:%0A" +
+    "⚠️ Vira Não Programado:%0A" +
     "Carros: " + vnpCarros + " | Tons: " + vnpTons;
 
-  var telefone = "11960934563"; // coloque aqui o WhatsApp destino
-
-  var url = "https://wa.me/" + telefone + "?text=" + mensagem;
+  // URL SEM NÚMERO → permite escolher CONTATO OU GRUPO
+  var url = "https://wa.me/?text=" + mensagem;
 
   window.open(url, "_blank");
 }
