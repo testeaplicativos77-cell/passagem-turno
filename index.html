@@ -1,141 +1,193 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Passagem de Turno</title>
+    <meta charset="UTF-8">
+    <title>Passagem de Turno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 15px;
+            background: #e9ecef;
+        }
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        .brand-corner {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 20px;
+            font-weight: 900;
+        }
+        .brand-n { color: #0056b3; }
+        .brand-dot { color: #ff9800; }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #25D366;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
 
-<style>
-body{
-  font-family: Arial, sans-serif;
-  max-width: 600px;
-  margin: auto;
-  padding: 15px;
-  background:#f5f5f5;
-}
-h2{
-  text-align:center;
-}
-label{
-  font-weight:bold;
-}
-input, select{
-  width:100%;
-  padding:8px;
-  margin-bottom:10px;
-  font-size:16px;
-}
-button{
-  width:100%;
-  padding:12px;
-  background:#25D366;
-  color:white;
-  border:none;
-  font-size:18px;
-  border-radius:5px;
-  cursor:pointer;
-}
-button:hover{
-  opacity:0.9;
-}
-.box{
-  background:white;
-  padding:15px;
-  border-radius:8px;
-}
-</style>
+        .section-title {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: block;
+            font-weight: bold;
+            color: #495057;
+            border-left: 5px solid #25D366;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            font-size: 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        button {
+            width: 100%;
+            padding: 18px;
+            background: #25D366;
+            color: white;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        button:hover { background: #128C7E; }
+    </style>
 </head>
-
 <body>
 
 <div class="box">
-<h2>Passagem de Turno</h2>
+    <div class="brand-corner">
+        <span class="brand-n">N</span><span class="brand-dot">.</span>
+    </div>
 
-<label>Data</label>
-<input type="date" id="data">
+    <h2>Passagem de Turno</h2>
 
-<label>Status Separação</label>
-<select id="status">
-  <option value="Separação">Separação</option>
-  <option value="Expedição">Expedição</option>
-</select>
+    <label>📅 Data</label>
+    <input type="date" id="data">
 
-<label>Horário HE</label>
-<input type="time" id="he">
+    <label>🚦 Status Separação</label>
+    <select id="status">
+        <option value="✅ Em dia">✅ Em dia</option>
+        <option value="🟡 Em alerta">🟡 Em alerta</option>
+        <option value="🔴 Atrasado">🔴 Atrasado</option>
+    </select>
 
-<label>Horário HO</label>
-<input type="time" id="ho">
+    <span class="section-title">⏰ Controle de Horários</span>
+    <div class="grid">
+        <div>
+            <label>🕒 HE</label>
+            <input type="time" id="he">
+        </div>
+        <div>
+            <label>⚙️ HO</label>
+            <input type="time" id="ho">
+        </div>
+    </div>
+    <label>📥 Recebimento</label>
+    <input type="time" id="recebimento">
 
-<label>Horário Recebimento</label>
-<input type="time" id="recebimento">
+    <span class="section-title">📊 Produção</span>
+    
+    <label>🚛 Expedido</label>
+    <div class="grid">
+        <input type="number" id="exp_carros" placeholder="🚚 Carros">
+        <input type="number" id="exp_tons" placeholder="⚖️ Tons">
+    </div>
 
-<hr>
+    <label>🔄 Vira Programado</label>
+    <div class="grid">
+        <input type="number" id="vp_carros" placeholder="🚚 Carros">
+        <input type="number" id="vp_tons" placeholder="⚖️ Tons">
+    </div>
 
-<label>Expedido - Carros</label>
-<input type="number" id="exp_carros">
+    <label>⚠️ Vira Não Programado</label>
+    <div class="grid">
+        <input type="number" id="vnp_carros" placeholder="🚚 Carros">
+        <input type="number" id="vnp_tons" placeholder="⚖️ Tons">
+    </div>
 
-<label>Expedido - Tons</label>
-<input type="number" id="exp_tons">
-
-<label>Vira Programado - Carros</label>
-<input type="number" id="vp_carros">
-
-<label>Vira Programado - Tons</label>
-<input type="number" id="vp_tons">
-
-<label>Vira Não Programado - Carros</label>
-<input type="number" id="vnp_carros">
-
-<label>Vira Não Programado - Tons</label>
-<input type="number" id="vnp_tons">
-
-<br>
-
-<button onclick="enviarWhats()">📲 Enviar para WhatsApp</button>
+    <button onclick="enviarWhats()">📲 Enviar para WhatsApp</button>
 </div>
 
 <script>
 function enviarWhats(){
+    const data = document.getElementById("data").value;
+    const status = document.getElementById("status").value;
+    const he = document.getElementById("he").value || "--:--";
+    const ho = document.getElementById("ho").value || "--:--";
+    const receb = document.getElementById("recebimento").value || "--:--";
+    const expC = document.getElementById("exp_carros").value || 0;
+    const expT = document.getElementById("exp_tons").value || 0;
+    const vpC = document.getElementById("vp_carros").value || 0;
+    const vpT = document.getElementById("vp_tons").value || 0;
+    const vnpC = document.getElementById("vnp_carros").value || 0;
+    const vnpT = document.getElementById("vnp_tons").value || 0;
 
-  var data = document.getElementById("data").value;
-  var status = document.getElementById("status").value;
-  var he = document.getElementById("he").value;
-  var ho = document.getElementById("ho").value;
-  var receb = document.getElementById("recebimento").value;
+    const dataF = data ? data.split('-').reverse().join('/') : "--/--/--";
 
-  var expCarros = document.getElementById("exp_carros").value;
-  var expTons = document.getElementById("exp_tons").value;
+    let mensagem = "*N. RELATÓRIO DE PASSAGEM DE TURNO*\n\n";
+    mensagem += "📅 *DATA:* " + dataF + "\n";
+    mensagem += "🚦 *STATUS:* " + status + "\n\n";
+    
+    mensagem += "🕒 *HORÁRIOS*\n";
+    mensagem += "- HE: " + he + "\n";
+    mensagem += "- HO: " + ho + "\n";
+    mensagem += "- Receb.: " + receb + "\n\n";
 
-  var vpCarros = document.getElementById("vp_carros").value;
-  var vpTons = document.getElementById("vp_tons").value;
+    mensagem += "🚛 *EXPEDIDO*\n";
+    mensagem += "- 🚚 Carros: " + expC + "\n";
+    mensagem += "- ⚖️ Tons: " + expT + " t\n\n";
 
-  var vnpCarros = document.getElementById("vnp_carros").value;
-  var vnpTons = document.getElementById("vnp_tons").value;
+    mensagem += "🔄 *VIRA PROGRAMADO*\n";
+    mensagem += "- 🚚 Carros: " + vpC + "\n";
+    mensagem += "- ⚖️ Tons: " + vpT + " t\n\n";
 
-  var mensagem =
-    "*📋 PASSAGEM DE TURNO*%0A" +
-    "📅 Data: " + data + "%0A" +
-    "📌 Status: " + status + "%0A%0A" +
+    mensagem += "⚠️ *VIRA NÃO PROGRAMADO*\n";
+    mensagem += "- 🚚 Carros: " + vnpC + "\n";
+    mensagem += "- ⚖️ Tons: " + vnpT + " t\n\n";
+    mensagem += "━━━━━━━━━━━━━━━━━━";
 
-    "⏰ Horários:%0A" +
-    "HE: " + he + "%0A" +
-    "HO: " + ho + "%0A" +
-    "Recebimento: " + receb + "%0A%0A" +
-
-    "🚚 Expedido:%0A" +
-    "Carros: " + expCarros + " | Tons: " + expTons + "%0A%0A" +
-
-    "🔁 Vira Programado:%0A" +
-    "Carros: " + vpCarros + " | Tons: " + vpTons + "%0A%0A" +
-
-    "⚠️ Vira Não Programado:%0A" +
-    "Carros: " + vnpCarros + " | Tons: " + vnpTons;
-
-  // URL SEM NÚMERO → permite escolher CONTATO OU GRUPO
-  var url = "https://wa.me/?text=" + mensagem;
-
-  window.open(url, "_blank");
+    const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(mensagem);
+    window.open(url, "_blank");
 }
 </script>
 
