@@ -2,193 +2,261 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Passagem de Turno</title>
+    <title>TERMINAL N. | MULTI-THEME SYSTEM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
+        /* --- VARIÁVEIS DE TEMA --- */
+        :root {
+            --bg-body: #05070a;
+            --bg-card: rgba(15, 20, 30, 0.8);
+            --text-main: #ffffff;
+            --text-label: #888888;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00d4ff;
+            --neon-green: #00ff88;
+            --input-bg: rgba(0,0,0,0.3);
+        }
+
+        /* --- CLASSE MODO CLARO --- */
+        .light-mode {
+            --bg-body: #eef2f7;
+            --bg-card: #ffffff;
+            --text-main: #2c3e50;
+            --text-label: #555555;
+            --border-color: #dcdde1;
+            --neon-blue: #0056b3;
+            --neon-green: #25D366;
+            --input-bg: #f8f9fa;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 600px;
-            margin: auto;
-            padding: 15px;
-            background: #e9ecef;
+            background: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background 0.4s ease;
         }
-        .box {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            position: relative;
-            margin-top: 20px;
-        }
-        
-        .brand-corner {
+
+        /* --- BOTÃO DE TEMA (TOP RIGHT) --- */
+        .theme-switch {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 20px;
-            font-weight: 900;
-        }
-        .brand-n { color: #0056b3; }
-        .brand-dot { color: #ff9800; }
-
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            border-bottom: 2px solid #25D366;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            margin-top: 10px;
-        }
-
-        .section-title {
-            background: #f8f9fa;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-top: 20px;
-            display: block;
-            font-weight: bold;
-            color: #495057;
-            border-left: 5px solid #25D366;
-            font-size: 13px;
-            text-transform: uppercase;
-        }
-        label {
-            font-weight: 600;
-            display: block;
-            margin-top: 15px;
-            color: #333;
-            font-size: 14px;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            font-size: 16px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        button {
-            width: 100%;
-            padding: 18px;
-            background: #25D366;
-            color: white;
-            border: none;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 10px;
+            top: 20px;
+            right: 20px;
             cursor: pointer;
-            margin-top: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 50px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 14px;
+            transition: 0.3s;
         }
-        button:hover { background: #128C7E; }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        .box {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            margin: 40px 0;
+            transition: all 0.4s ease;
+        }
+
+        .brand { text-align: center; font-size: 26px; font-weight: 900; margin-bottom: 5px; }
+        .brand span { color: var(--neon-blue); }
+
+        .section-header {
+            background: rgba(0,0,0,0.03);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 20px 0 10px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--neon-green);
+            border-left: 4px solid var(--neon-green);
+            text-transform: uppercase;
+        }
+
+        label { font-size: 11px; color: var(--text-label); display: flex; align-items: center; gap: 8px; margin-top: 15px; text-transform: uppercase; font-weight: 600; }
+        
+        input, select {
+            width: 100%; padding: 12px; margin-top: 6px;
+            background: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 10px; color: var(--text-main); font-size: 15px; box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        button.btn-zap {
+            width: 100%; padding: 20px; margin-top: 30px;
+            background: linear-gradient(45deg, #128C7E, #25D366);
+            border: none; border-radius: 50px; color: white;
+            font-weight: 900; text-transform: uppercase; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        /* --- ESTILO PARA O MODO "ATRASADO" --- */
+        .status-danger {
+            border: 2px solid #ff4d4d !important;
+            animation: pulse-danger 2s infinite;
+        }
+        @keyframes pulse-danger {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 77, 77, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+        }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <div class="brand-corner">
-        <span class="brand-n">N</span><span class="brand-dot">.</span>
-    </div>
+<div class="theme-switch" onclick="toggleTheme()">
+    <i id="theme-icon" class="fas fa-moon"></i>
+    <span id="theme-text">Modo Escuro</span>
+</div>
 
-    <h2>Passagem de Turno</h2>
+<div class="box" id="mainBox">
+    <div class="brand"><span>N</span>.</div>
+    <p style="text-align: center; font-size: 12px; opacity: 0.7; margin-top: 0;">Relatório de Passagem de Turno</p>
 
-    <label>📅 Data</label>
-    <input type="date" id="data">
-
-    <label>🚦 Status Separação</label>
-    <select id="status">
-        <option value="✅ Em dia">✅ Em dia</option>
-        <option value="🟡 Em alerta">🟡 Em alerta</option>
-        <option value="🔴 Atrasado">🔴 Atrasado</option>
-    </select>
-
-    <span class="section-title">⏰ Controle de Horários</span>
     <div class="grid">
         <div>
-            <label>🕒 HE</label>
+            <label><i class="far fa-calendar-alt"></i> Data</label>
+            <input type="date" id="data">
+        </div>
+        <div>
+            <label><i class="fas fa-traffic-light"></i> Status Separação</label>
+            <select id="status" onchange="checkStatus(this)">
+                <option value="✅ Em dia">✅ Em dia</option>
+                <option value="🟡 Em alerta">🟡 Em alerta</option>
+                <option value="🔴 Atrasado">🔴 Atrasado</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="section-header">⏰ Controle de Horários</div>
+    <div class="grid">
+        <div>
+            <label><i class="far fa-clock"></i> Hora Extra (HE)</label>
             <input type="time" id="he">
         </div>
         <div>
-            <label>⚙️ HO</label>
+            <label><i class="fas fa-cog"></i> Hora Operacional (HO)</label>
             <input type="time" id="ho">
         </div>
     </div>
-    <label>📥 Recebimento</label>
-    <input type="time" id="recebimento">
+    <label><i class="fas fa-inbox"></i> Recebimento</label>
+    <input type="time" id="receb">
 
-    <span class="section-title">📊 Produção</span>
+    <div class="section-header">📊 Produção de Turno</div>
     
-    <label>🚛 Expedido</label>
+    <label><i class="fas fa-truck"></i> Expedido</label>
     <div class="grid">
-        <input type="number" id="exp_carros" placeholder="🚚 Carros">
-        <input type="number" id="exp_tons" placeholder="⚖️ Tons">
+        <input type="number" id="exp_c" placeholder="🚚 Carros">
+        <input type="number" id="exp_t" placeholder="⚖️ Tons">
     </div>
 
-    <label>🔄 Vira Programado</label>
+    <label><i class="fas fa-redo-alt"></i> Vira Programado</label>
     <div class="grid">
-        <input type="number" id="vp_carros" placeholder="🚚 Carros">
-        <input type="number" id="vp_tons" placeholder="⚖️ Tons">
+        <input type="number" id="vp_c" placeholder="🚚 Carros">
+        <input type="number" id="vp_t" placeholder="⚖️ Tons">
     </div>
 
-    <label>⚠️ Vira Não Programado</label>
+    <label><i class="fas fa-exclamation-circle"></i> Vira Não Programado</label>
     <div class="grid">
-        <input type="number" id="vnp_carros" placeholder="🚚 Carros">
-        <input type="number" id="vnp_tons" placeholder="⚖️ Tons">
+        <input type="number" id="vnp_c" placeholder="🚚 Carros">
+        <input type="number" id="vnp_t" placeholder="⚖️ Tons">
     </div>
 
-    <button onclick="enviarWhats()">📲 Enviar para WhatsApp</button>
+    <button class="btn-zap" onclick="enviar()">
+        <i class="fab fa-whatsapp"></i> Transmitir Dados
+    </button>
 </div>
 
 <script>
-function enviarWhats(){
-    const data = document.getElementById("data").value;
-    const status = document.getElementById("status").value;
-    const he = document.getElementById("he").value || "--:--";
-    const ho = document.getElementById("ho").value || "--:--";
-    const receb = document.getElementById("recebimento").value || "--:--";
-    const expC = document.getElementById("exp_carros").value || 0;
-    const expT = document.getElementById("exp_tons").value || 0;
-    const vpC = document.getElementById("vp_carros").value || 0;
-    const vpT = document.getElementById("vp_tons").value || 0;
-    const vnpC = document.getElementById("vnp_carros").value || 0;
-    const vnpT = document.getElementById("vnp_tons").value || 0;
+    // 🎨 FUNÇÃO DE ALTERNAR TEMA
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        const text = document.getElementById('theme-text');
+        
+        body.classList.toggle('light-mode');
+        
+        if (body.classList.contains('light-mode')) {
+            icon.className = 'fas fa-sun';
+            text.innerText = 'Modo Claro';
+        } else {
+            icon.className = 'fas fa-moon';
+            text.innerText = 'Modo Escuro';
+        }
+        playFeedbackSound(400); // Som suave ao trocar
+    }
 
-    const dataF = data ? data.split('-').reverse().join('/') : "--/--/--";
+    // 🚨 ALERTA VERMELHO SE ATRASADO
+    function checkStatus(sel) {
+        const box = document.getElementById('mainBox');
+        if (sel.value.includes('🔴')) {
+            box.classList.add('status-danger');
+        } else {
+            box.classList.remove('status-danger');
+        }
+    }
 
-    let mensagem = "*N. RELATÓRIO DE PASSAGEM DE TURNO*\n\n";
-    mensagem += "📅 *DATA:* " + dataF + "\n";
-    mensagem += "🚦 *STATUS:* " + status + "\n\n";
-    
-    mensagem += "🕒 *HORÁRIOS*\n";
-    mensagem += "- HE: " + he + "\n";
-    mensagem += "- HO: " + ho + "\n";
-    mensagem += "- Receb.: " + receb + "\n\n";
+    // 🔊 FEEDBACK SONORO (BEEP)
+    function playFeedbackSound(freq) {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.frequency.value = freq;
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.1);
+        osc.stop(audioCtx.currentTime + 0.1);
+    }
 
-    mensagem += "🚛 *EXPEDIDO*\n";
-    mensagem += "- 🚚 Carros: " + expC + "\n";
-    mensagem += "- ⚖️ Tons: " + expT + " t\n\n";
+    // 📤 ENVIO PARA WHATSAPP
+    function enviar() {
+        playFeedbackSound(600);
+        if (navigator.vibrate) navigator.vibrate(50);
 
-    mensagem += "🔄 *VIRA PROGRAMADO*\n";
-    mensagem += "- 🚚 Carros: " + vpC + "\n";
-    mensagem += "- ⚖️ Tons: " + vpT + " t\n\n";
+        const d = document.getElementById("data").value.split('-').reverse().join('/');
+        const s = document.getElementById("status").value;
+        const he = document.getElementById("he").value || "---";
+        const ho = document.getElementById("ho").value || "---";
+        const rec = document.getElementById("receb").value || "---";
+        
+        const exp = `🚚 ${document.getElementById("exp_c").value || 0} | ⚖️ ${document.getElementById("exp_t").value || 0}t`;
+        const vp = `🚚 ${document.getElementById("vp_c").value || 0} | ⚖️ ${document.getElementById("vp_t").value || 0}t`;
+        const vnp = `🚚 ${document.getElementById("vnp_c").value || 0} | ⚖️ ${document.getElementById("vnp_t").value || 0}t`;
 
-    mensagem += "⚠️ *VIRA NÃO PROGRAMADO*\n";
-    mensagem += "- 🚚 Carros: " + vnpC + "\n";
-    mensagem += "- ⚖️ Tons: " + vnpT + " t\n\n";
-    mensagem += "━━━━━━━━━━━━━━━━━━";
+        let msg = `*N. PASSAGEM DE TURNO*\n`;
+        msg += `📅 DATA: ${d || '--/--/--'}\n`;
+        msg += `🚦 STATUS: ${s}\n\n`;
+        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Receb: ${rec}\n\n`;
+        msg += `*EXPEDIDO*\n${exp}\n\n`;
+        msg += `*VIRA PROG*\n${vp}\n\n`;
+        msg += `*VIRA NÃO PROG*\n${vnp}\n\n`;
+        msg += `━━━━━━━━━━━━━━`;
 
-    const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(mensagem);
-    window.open(url, "_blank");
-}
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    // Data automática
+    document.getElementById('data').valueAsDate = new Date();
 </script>
 
 </body>
