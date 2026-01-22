@@ -159,8 +159,17 @@
             <input type="time" id="ho">
         </div>
     </div>
-    <label><i class="fas fa-inbox"></i> Recebimento</label>
-    <input type="time" id="receb">
+    
+    <div class="grid">
+        <div>
+            <label><i class="fas fa-inbox"></i> Recebimento</label>
+            <input type="time" id="receb">
+        </div>
+        <div>
+            <label><i class="fas fa-check-double"></i> Padronização</label>
+            <input type="time" id="padron">
+        </div>
+    </div>
 
     <div class="section-header">📊 Produção de Turno</div>
     
@@ -182,8 +191,14 @@
         <input type="number" id="vnp_t" placeholder="⚖️ Tons">
     </div>
 
+    <label><i class="fas fa-history"></i> Atrasado</label>
+    <div class="grid">
+        <input type="number" id="atras_c" placeholder="🚚 Carros">
+        <input type="number" id="atras_t" placeholder="⚖️ Tons">
+    </div>
+
     <button class="btn-zap" onclick="enviar()">
-        <i class="fab fa-whatsapp"></i> Enviar WhatsAp
+        <i class="fab fa-whatsapp"></i> Enviar WhatsApp
     </button>
 </div>
 
@@ -238,18 +253,21 @@
         const he = document.getElementById("he").value || "---";
         const ho = document.getElementById("ho").value || "---";
         const rec = document.getElementById("receb").value || "---";
+        const pad = document.getElementById("padron").value || "---";
         
         const exp = `🚚 ${document.getElementById("exp_c").value || 0} | ⚖️ ${document.getElementById("exp_t").value || 0}t`;
         const vp = `🚚 ${document.getElementById("vp_c").value || 0} | ⚖️ ${document.getElementById("vp_t").value || 0}t`;
         const vnp = `🚚 ${document.getElementById("vnp_c").value || 0} | ⚖️ ${document.getElementById("vnp_t").value || 0}t`;
+        const atras = `🚚 ${document.getElementById("atras_c").value || 0} | ⚖️ ${document.getElementById("atras_t").value || 0}t`;
 
         let msg = `*N. PASSAGEM DE TURNO*\n`;
         msg += `📅 DATA: ${d || '--/--/--'}\n`;
         msg += `🚦 STATUS: ${s}\n\n`;
-        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Receb: ${rec}\n\n`;
+        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Receb: ${rec}\n- Padronização: ${pad}\n\n`;
         msg += `*EXPEDIDO*\n${exp}\n\n`;
         msg += `*VIRA PROG*\n${vp}\n\n`;
         msg += `*VIRA NÃO PROG*\n${vnp}\n\n`;
+        msg += `*ATRASADO*\n${atras}\n\n`;
         msg += `━━━━━━━━━━━━━━`;
 
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
@@ -261,5 +279,3 @@
 
 </body>
 </html>
-
-
