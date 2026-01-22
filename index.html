@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- VARIÁVEIS DE TEMA --- */
         :root {
             --bg-body: #05070a;
             --bg-card: rgba(15, 20, 30, 0.8);
@@ -19,7 +18,6 @@
             --input-bg: rgba(0,0,0,0.3);
         }
 
-        /* --- CLASSE MODO CLARO --- */
         .light-mode {
             --bg-body: #eef2f7;
             --bg-card: #ffffff;
@@ -43,51 +41,26 @@
             transition: background 0.4s ease;
         }
 
-        /* --- BOTÃO DE TEMA (TOP RIGHT) --- */
         .theme-switch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 10px 15px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-size: 14px;
-            transition: 0.3s;
+            position: absolute; top: 20px; right: 20px; cursor: pointer;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 10px 15px; border-radius: 50px; display: flex;
+            align-items: center; gap: 10px; z-index: 100; font-size: 14px;
         }
 
-        /* --- CONTAINER PRINCIPAL --- */
         .box {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            padding: 30px;
-            border-radius: 25px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 500px;
-            margin: 40px 0;
-            transition: all 0.4s ease;
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            padding: 30px; border-radius: 25px; border: 1px solid var(--border-color);
+            width: 90%; max-width: 500px; margin: 40px 0; transition: all 0.4s ease;
         }
 
-        .brand { text-align: center; font-size: 26px; font-weight: 900; margin-bottom: 5px; }
+        .brand { text-align: center; font-size: 26px; font-weight: 900; }
         .brand span { color: var(--neon-blue); }
 
         .section-header {
-            background: rgba(0,0,0,0.03);
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin: 20px 0 10px;
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--neon-green);
-            border-left: 4px solid var(--neon-green);
+            background: rgba(0,0,0,0.03); padding: 8px 12px; border-radius: 6px;
+            margin: 20px 0 10px; font-size: 12px; font-weight: 800;
+            color: var(--neon-green); border-left: 4px solid var(--neon-green);
             text-transform: uppercase;
         }
 
@@ -97,29 +70,26 @@
             width: 100%; padding: 12px; margin-top: 6px;
             background: var(--input-bg); border: 1px solid var(--border-color);
             border-radius: 10px; color: var(--text-main); font-size: 15px; box-sizing: border-box;
-            transition: 0.3s;
         }
 
+        input:disabled { opacity: 0.4; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .fin-check {
+            display: flex; align-items: center; gap: 5px; font-size: 10px;
+            margin-top: 5px; color: var(--neon-blue); cursor: pointer;
+        }
+        .fin-check input { width: auto; margin: 0; }
 
         button.btn-zap {
             width: 100%; padding: 20px; margin-top: 30px;
             background: linear-gradient(45deg, #128C7E, #25D366);
             border: none; border-radius: 50px; color: white;
             font-weight: 900; text-transform: uppercase; cursor: pointer;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
         }
 
-        /* --- ESTILO PARA O MODO "ATRASADO" --- */
-        .status-danger {
-            border: 2px solid #ff4d4d !important;
-            animation: pulse-danger 2s infinite;
-        }
-        @keyframes pulse-danger {
-            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 77, 77, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
-        }
+        .status-danger { border: 2px solid #ff4d4d !important; animation: pulse-danger 2s infinite; }
     </style>
 </head>
 <body>
@@ -153,10 +123,12 @@
         <div>
             <label><i class="far fa-clock"></i> Hora (HE)</label>
             <input type="time" id="he">
+            <label class="fin-check"><input type="checkbox" onchange="toggleInput('he', this)"> Finalizado</label>
         </div>
         <div>
             <label><i class="fas fa-cog"></i> Hora (HO)</label>
             <input type="time" id="ho">
+            <label class="fin-check"><input type="checkbox" onchange="toggleInput('ho', this)"> Finalizado</label>
         </div>
     </div>
     
@@ -164,11 +136,19 @@
         <div>
             <label><i class="fas fa-inbox"></i> Recebimento</label>
             <input type="time" id="receb">
+            <label class="fin-check"><input type="checkbox" onchange="toggleInput('receb', this)"> Finalizado</label>
         </div>
         <div>
             <label><i class="fas fa-check-double"></i> Padronização</label>
             <input type="time" id="padron">
+            <label class="fin-check"><input type="checkbox" onchange="toggleInput('padron', this)"> Finalizado</label>
         </div>
+    </div>
+
+    <div>
+        <label><i class="fas fa-tags"></i> Etiquetagem</label>
+        <input type="text" id="etiq" placeholder="Ex: Ok, Pendente, 100%...">
+        <label class="fin-check"><input type="checkbox" onchange="toggleInput('etiq', this)"> Finalizado</label>
     </div>
 
     <div class="section-header">📊 Produção de Turno</div>
@@ -203,14 +183,11 @@
 </div>
 
 <script>
-    // 🎨 FUNÇÃO DE ALTERNAR TEMA
     function toggleTheme() {
         const body = document.body;
         const icon = document.getElementById('theme-icon');
         const text = document.getElementById('theme-text');
-        
         body.classList.toggle('light-mode');
-        
         if (body.classList.contains('light-mode')) {
             icon.className = 'fas fa-sun';
             text.innerText = 'Modo Claro';
@@ -218,10 +195,15 @@
             icon.className = 'fas fa-moon';
             text.innerText = 'Modo Escuro';
         }
-        playFeedbackSound(400); // Som suave ao trocar
+        playFeedbackSound(400);
     }
 
-    // 🚨 ALERTA VERMELHO SE ATRASADO
+    function toggleInput(id, cb) {
+        const input = document.getElementById(id);
+        input.disabled = cb.checked;
+        if(cb.checked) input.value = "";
+    }
+
     function checkStatus(sel) {
         const box = document.getElementById('mainBox');
         if (sel.value.includes('🔴')) {
@@ -231,7 +213,6 @@
         }
     }
 
-    // 🔊 FEEDBACK SONORO (BEEP)
     function playFeedbackSound(freq) {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -243,17 +224,25 @@
         osc.stop(audioCtx.currentTime + 0.1);
     }
 
-    // 📤 ENVIO PARA WHATSAPP
+    function getVal(id) {
+        const input = document.getElementById(id);
+        const cb = input.nextElementSibling.querySelector('input');
+        if (cb && cb.checked) return "✅ FINALIZADO";
+        return input.value || "---";
+    }
+
     function enviar() {
         playFeedbackSound(600);
         if (navigator.vibrate) navigator.vibrate(50);
 
         const d = document.getElementById("data").value.split('-').reverse().join('/');
         const s = document.getElementById("status").value;
-        const he = document.getElementById("he").value || "---";
-        const ho = document.getElementById("ho").value || "---";
-        const rec = document.getElementById("receb").value || "---";
-        const pad = document.getElementById("padron").value || "---";
+        
+        const he = getVal("he");
+        const ho = getVal("ho");
+        const rec = getVal("receb");
+        const pad = getVal("padron");
+        const etiq = getVal("etiq");
         
         const exp = `🚚 ${document.getElementById("exp_c").value || 0} | ⚖️ ${document.getElementById("exp_t").value || 0}t`;
         const vp = `🚚 ${document.getElementById("vp_c").value || 0} | ⚖️ ${document.getElementById("vp_t").value || 0}t`;
@@ -261,9 +250,9 @@
         const atras = `🚚 ${document.getElementById("atras_c").value || 0} | ⚖️ ${document.getElementById("atras_t").value || 0}t`;
 
         let msg = `*N. PASSAGEM DE TURNO*\n`;
-        msg += `📅 DATA: ${d || '--/--/--'}\n`;
-        msg += `🚦 STATUS: ${s}\n\n`;
-        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Receb: ${rec}\n- Padronização: ${pad}\n\n`;
+        msg += `📅 DATA: ${d || '--/--/--'}\n\n`; 
+        msg += `🚦 STATUS SEPARAÇÃO: ${s}\n`; 
+        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Receb: ${rec}\n- Padronização: ${pad}\n- Etiquetagem: ${etiq}\n\n`;
         msg += `*EXPEDIDO*\n${exp}\n\n`;
         msg += `*VIRA PROG*\n${vp}\n\n`;
         msg += `*VIRA NÃO PROG*\n${vnp}\n\n`;
@@ -273,7 +262,6 @@
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
     }
 
-    // Data automática
     document.getElementById('data').valueAsDate = new Date();
 </script>
 
