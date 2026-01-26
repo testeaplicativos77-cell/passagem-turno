@@ -59,19 +59,18 @@
 
         .section-header {
             background: rgba(0,0,0,0.03); padding: 8px 12px; border-radius: 6px;
-            margin: 20px 0 10px; font-size: 12px; font-weight: 800;
+            margin: 25px 0 15px; font-size: 12px; font-weight: 800;
             color: var(--neon-green); border-left: 4px solid var(--neon-green);
             text-transform: uppercase;
         }
 
-        label { font-size: 11px; color: var(--text-label); display: flex; align-items: center; gap: 8px; margin-top: 15px; text-transform: uppercase; font-weight: 600; }
+        label { font-size: 11px; color: var(--text-label); display: flex; align-items: center; gap: 8px; margin-top: 18px; text-transform: uppercase; font-weight: 600; }
         
-        /* Adicionado textarea aqui para manter o mesmo estilo */
         input, select, textarea {
             width: 100%; padding: 12px; margin-top: 6px;
             background: var(--input-bg); border: 1px solid var(--border-color);
             border-radius: 10px; color: var(--text-main); font-size: 15px; box-sizing: border-box;
-            font-family: inherit; /* Garante a mesma fonte no textarea */
+            font-family: inherit;
         }
         
         textarea { resize: vertical; }
@@ -94,6 +93,12 @@
         }
 
         .status-danger { border: 2px solid #ff4d4d !important; animation: pulse-danger 2s infinite; }
+        
+        @keyframes pulse-danger {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 77, 77, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+        }
     </style>
 </head>
 <body>
@@ -181,6 +186,12 @@
         <input type="number" id="atras_t" placeholder="⚖️ Tons">
     </div>
 
+    <label><i class="fas fa-calculator"></i> Total Expedido</label>
+    <div class="grid">
+        <input type="number" id="total_c" placeholder="🚚 Carros">
+        <input type="number" id="total_t" placeholder="⚖️ Tons">
+    </div>
+
     <div class="section-header">📝 Notas Adicionais</div>
     <label><i class="fas fa-comment-dots"></i> Observações Gerais</label>
     <textarea id="obs" rows="3" placeholder="Digite aqui ocorrências ou detalhes importantes..."></textarea>
@@ -234,7 +245,9 @@
 
     function getVal(id) {
         const input = document.getElementById(id);
-        const cb = input.nextElementSibling.querySelector('input');
+        const labelFin = input.nextElementSibling;
+        const cb = labelFin ? labelFin.querySelector('input[type="checkbox"]') : null;
+        
         if (cb && cb.checked) return "✅ FINALIZADO";
         return input.value || "---";
     }
@@ -256,20 +269,23 @@
         const vp = `🚚 ${document.getElementById("vp_c").value || 0} | ⚖️ ${document.getElementById("vp_t").value || 0}t`;
         const vnp = `🚚 ${document.getElementById("vnp_c").value || 0} | ⚖️ ${document.getElementById("vnp_t").value || 0}t`;
         const atras = `🚚 ${document.getElementById("atras_c").value || 0} | ⚖️ ${document.getElementById("atras_t").value || 0}t`;
+        const total = `🚚 ${document.getElementById("total_c").value || 0} | ⚖️ ${document.getElementById("total_t").value || 0}t`;
         
-        // Captura o valor da observação
         const obs = document.getElementById("obs").value;
 
         let msg = `*N. PASSAGEM DE TURNO*\n`;
         msg += `📅 DATA: ${d || '--/--/--'}\n\n`; 
         msg += `🚦 STATUS SEPARAÇÃO: ${s}\n`; 
-        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Recebimento: ${rec}\n- Padronização: ${pad}\n- Etiquetagem: ${etiq}\n\n`;
+        msg += `*HORÁRIOS*\n- HE: ${he}\n- HO: ${ho}\n- Recebimento: ${rec}\n- Padronização: ${pad}\n- Etiquetagem: ${etiq}\n`;
+
+        // Reforçado o espaço (3 quebras de linha para garantir a separação visual)
+        msg += `\n\n\n📦 *STATUS EXPEDIÇÃO*\n`;
         msg += `*EXPEDIDO*\n${exp}\n\n`;
         msg += `*VIRA PROG*\n${vp}\n\n`;
         msg += `*VIRA NÃO PROG*\n${vnp}\n\n`;
         msg += `*ATRASADO*\n${atras}\n\n`;
+        msg += `*TOTAL EXPEDIDO*\n${total}\n\n`;
         
-        // Adiciona observação se houver texto
         if(obs && obs.trim() !== "") {
             msg += `*OBSERVAÇÕES*\n${obs}\n\n`;
         }
